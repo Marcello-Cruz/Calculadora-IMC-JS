@@ -1,57 +1,63 @@
-/* using System;
+const altura = document.getElementById('altura');
+const peso = document.getElementById('peso'); 
+const message = document.querySelector('.message');
 
-namespace CalculadoraIMC
-{
-    class Program
+const exibirMesssage  = (imcParamentro, mensagem) => {
+
+    message.classList.remove('off');
+
+    message.innerText = `Seu imc é ${imcParamentro},  ${mensagem} !`;
+
+    setTimeout(()=>{
+        message.classList.add('off')
+    },4000)
+}
+
+const limparCampos = () =>{
+    altura.value =  " ";
+    peso.value =  " ";
+}
+
+const iniciar = () =>{
+
+    let alturaResult = parseFloat((altura.value  ** 2));
+    let imc = parseFloat(peso.value) / alturaResult;
+    console.log(imc)
+    
+    if(imc < 17)
     {
-        static void Main(string[] args)
-        {
-            double massa, altura, imc;
-            string diagnostico;
-
-            Console.WriteLine("-- Calculadora de IMC --\n");
-
-            Console.Write("Digite seu peso em kg...: ");
-            massa = Convert.ToDouble(Console.ReadLine());
-
-            Console.Write("Digite sua altura em m..: ");
-            altura = Convert.ToDouble(Console.ReadLine());
-
-            imc = massa / Math.Pow(altura, 2);
-
-            Console.WriteLine($"\nSeu IMC é {imc:N2} kg/m².");
-
-            if (imc < 17)
-            {
-                diagnostico = "Muito abaixo do peso";
-            }
-            else if (imc < 18.5)
-            {
-                diagnostico = "Abaixo do peso";
-            }
-            else if (imc < 25)
-            {
-                diagnostico = "Peso normal";
-            }
-            else if (imc < 30)
-            {
-                diagnostico = "Acima do peso";
-            }
-            else if (imc < 35)
-            {
-                diagnostico = "Obesidade I";
-            }
-            else if (imc < 40)
-            {
-                diagnostico = "Obesidade II (severa)";
-            }
-            else
-            {
-                diagnostico = "Obesidade III (mórbida)";
-            }
-
-            Console.WriteLine($"Diagnóstico: {diagnostico}");
-        }
+        exibirMesssage(imc.toFixed(2), "Abaixo do peso");
     }
-}*/
-let
+    if(imc >= 17 && imc < 18.49)
+    {
+        exibirMesssage(imc.toFixed(2), "Abaixo do peso");
+    }
+    if(imc >= 18.5 && imc  <= 24.99)
+    {
+        exibirMesssage(imc.toFixed(2),"Peso normal");
+    }
+    if(imc >= 25 && imc  <= 29.99)
+    {
+        exibirMesssage(imc.toFixed(2), "Acima do peso");
+    }
+    if(imc >= 30 && imc  <= 34.99)
+    {
+        exibirMesssage(imc.toFixed(2),"Obesidade I");
+    }
+    if(imc >= 35 && imc  <= 39.99)
+    {
+        exibirMesssage(imc.toFixed(2),"Obesidade II (severa)");
+    }
+    if(imc > 40 )
+    {
+        exibirMesssage(imc.toFixed(2),"Obesidade III (mórbida)");
+    }
+
+
+}
+
+const form = document.getElementById('form-imc').addEventListener('submit' , (e)=>{
+    e.preventDefault();
+    iniciar();
+    limparCampos();
+})
